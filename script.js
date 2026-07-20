@@ -2,6 +2,10 @@
 // MATRIX RAIN
 // ===================================
 
+const typingSound = document.getElementById("typingSound");
+const accessSound = document.getElementById("accessSound");
+const explosionSound = document.getElementById("explosionSound");
+
 const canvas=document.getElementById("matrix");
 
 const ctx=canvas.getContext("2d");
@@ -108,16 +112,44 @@ const bootAnimation = setInterval(() => {
 // ===============================
 
 function showMessage(){
+    accessSound.play().catch(() => {});
 
     boot.classList.add("hidden");
 
     message.classList.remove("hidden");
     
-    typeWriter();
-    
-    message.classList.add("fadeIn");
+   function typeWriter() {
 
-    setTimeout(startCountdown,7000);
+    const texts = document.querySelectorAll(".typing");
+
+    texts.forEach((item) => {
+
+        const original = item.innerHTML.trim();
+
+        item.innerHTML = "";
+
+        let i = 0;
+
+        const writer = setInterval(() => {
+
+            item.innerHTML += original.charAt(i);
+
+            if (original.charAt(i) !== " ") {
+                typingSound.currentTime = 0;
+                typingSound.play().catch(() => {});
+            }
+
+            i++;
+
+            if (i >= original.length) {
+                clearInterval(writer);
+            }
+
+        }, 28);
+
+    });
+
+}
 
 }
 
@@ -196,6 +228,11 @@ function showDestroy(){
 // ===============================
 
 function showFinal(){
+    explosionSound.play().catch(() => {});
+
+if (navigator.vibrate) {
+    navigator.vibrate([300, 100, 300]);
+}
 
     destroy.classList.add("hidden");
 
