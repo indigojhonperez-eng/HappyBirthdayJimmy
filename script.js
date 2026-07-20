@@ -112,7 +112,9 @@ function showMessage(){
     boot.classList.add("hidden");
 
     message.classList.remove("hidden");
-
+    
+    typeWriter();
+    
     message.classList.add("fadeIn");
 
     setTimeout(startCountdown,7000);
@@ -200,5 +202,34 @@ function showFinal(){
     finalScreen.classList.remove("hidden");
 
     finalScreen.classList.add("fadeIn");
+function typeWriter(){
 
+const texts=document.querySelectorAll(".typing");
+
+texts.forEach((item)=>{
+
+const original=item.innerHTML.trim();
+
+item.innerHTML="";
+
+let i=0;
+
+const writer=setInterval(()=>{
+
+item.innerHTML+=original.charAt(i);
+
+i++;
+
+if(i>=original.length){
+
+clearInterval(writer);
+
+}
+
+},28);
+
+});
+
+}
+    
 }
