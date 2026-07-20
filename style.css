@@ -34,8 +34,7 @@ body{
 
     z-index:-2;
 
-    background:
-    radial-gradient(circle at center,#062d06 0%,#021302 45%,#000 100%);
+    background:#000;
 
 }
 
@@ -402,6 +401,65 @@ p{
 .deleteBar{
 
     width:95%;
+
+}
+   canvas{
+
+    display:block;
+
+}
+
+
+/* Efecto monitor antiguo */
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    pointer-events:none;
+
+    background:
+
+    repeating-linear-gradient(
+
+    transparent,
+
+    transparent 3px,
+
+    rgba(255,255,255,.03) 4px
+
+    );
+
+    animation:flicker .12s infinite;
+
+}
+
+
+@keyframes flicker{
+
+0%{
+
+opacity:.10;
+
+}
+
+50%{
+
+opacity:.18;
+
+}
+
+100%{
+
+opacity:.10;
 
 }
 
