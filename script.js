@@ -184,10 +184,13 @@ function startCountdown(){
         }
 
     },1000);
+document.body.classList.add("flash");
 
+setTimeout(() => {
+    document.body.classList.remove("flash");
+}, 500);
+    
 }
-
-
 
 // ===============================
 // ELIMINANDO MENSAJE
@@ -268,5 +271,20 @@ clearInterval(writer);
 });
 
 }
-    
+    setTimeout(() => {
+
+    document.body.style.background = "#000";
+
+    finalScreen.innerHTML = `
+        <h1 style="color:#00ff66;">🎂</h1>
+        <h2>FELIZ CUMPLEAÑOS JIMMY</h2>
+        <br>
+        <p>😂 Tus amigos del Área de TI.</p>
+        <br>
+        <p style="font-size:14px;color:#666;">
+        Fin de la transmisión...
+        </p>
+    `;
+
+},5000);
 }
