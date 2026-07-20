@@ -4,6 +4,8 @@
 // =======================================
 
 // ---------- AUDIO ----------
+console.log("INICIO DEL SCRIPT");
+
 const typingSound = document.getElementById("typingSound");
 const accessSound = document.getElementById("accessSound");
 const explosionSound = document.getElementById("explosionSound");
@@ -364,5 +366,6 @@ function showFinal(){
         `;
 
     },4000);
-
 }
+
+console.log("SCRIPT CARGADO CORRECTAMENTE");
