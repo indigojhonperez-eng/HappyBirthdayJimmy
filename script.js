@@ -1,102 +1,121 @@
-// ===================================
-// MATRIX RAIN
-// ===================================
+// =======================================
+// HACKER BIRTHDAY
+// PARTE 1 - MATRIX + BOOT
+// =======================================
 
+// ---------- AUDIO ----------
 const typingSound = document.getElementById("typingSound");
 const accessSound = document.getElementById("accessSound");
 const explosionSound = document.getElementById("explosionSound");
 
-const canvas=document.getElementById("matrix");
+// ---------- MATRIX ----------
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-const ctx=canvas.getContext("2d");
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+resizeCanvas();
 
-const letters="アカサタナハマヤラABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&<>";
+const letters =
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+-<>アイウエオカキクケコサシスセソ";
 
-const fontSize=18;
+const fontSize = 18;
 
-const columns=Math.floor(canvas.width/fontSize);
+let columns = Math.floor(canvas.width / fontSize);
 
-const drops=[];
+let drops = [];
 
-for(let i=0;i<columns;i++){
+function resetDrops() {
 
-drops[i]=1;
+    columns = Math.floor(canvas.width / fontSize);
+
+    drops = [];
+
+    for (let i = 0; i < columns; i++) {
+
+        drops[i] = Math.random() * canvas.height;
+
+    }
 
 }
 
-function drawMatrix(){
+resetDrops();
 
-ctx.fillStyle="rgba(0,0,0,0.06)";
+window.addEventListener("resize", () => {
 
-ctx.fillRect(0,0,canvas.width,canvas.height);
+    resizeCanvas();
 
-ctx.fillStyle="#00ff66";
-
-ctx.font=fontSize+"px monospace";
-
-for(let i=0;i<drops.length;i++){
-
-const text=letters.charAt(Math.floor(Math.random()*letters.length));
-
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
-
-drops[i]=0;
-
-}
-
-drops[i]++;
-
-}
-
-}
-
-setInterval(drawMatrix,33);
-
-window.addEventListener("resize",()=>{
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+    resetDrops();
 
 });
 
+function drawMatrix() {
 
-// ===============================
-// HACKER BIRTHDAY
-// ===============================
+    ctx.fillStyle = "rgba(0,0,0,0.06)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-const boot = document.getElementById("boot");
-const message = document.getElementById("message");
-const countdown = document.getElementById("countdown");
-const destroy = document.getElementById("destroy");
-const finalScreen = document.getElementById("final");
+    ctx.fillStyle = "#00ff66";
+    ctx.font = fontSize + "px monospace";
 
-const progressBar = document.getElementById("progressBar");
-const loadingPercent = document.getElementById("loadingPercent");
+    for(let i=0;i<drops.length;i++){
 
-const deleteProgress = document.getElementById("deleteProgress");
-const deleteText = document.getElementById("deleteText");
+        const text =
+        letters.charAt(
+            Math.floor(Math.random()*letters.length)
+        );
 
-const counter = document.getElementById("counter");
+        ctx.fillText(text,i*fontSize,drops[i]);
 
-let progress = 0;
+        if(drops[i] > canvas.height && Math.random()>0.98){
 
-// ===============================
-// BARRA DE CARGA
-// ===============================
+            drops[i]=0;
 
-const bootAnimation = setInterval(() => {
+        }
+
+        drops[i]+=fontSize;
+
+    }
+
+}
+
+setInterval(drawMatrix,35);
+
+// =======================================
+// ELEMENTOS HTML
+// =======================================
+
+const boot=document.getElementById("boot");
+const message=document.getElementById("message");
+const countdown=document.getElementById("countdown");
+const destroy=document.getElementById("destroy");
+const finalScreen=document.getElementById("final");
+
+const progressBar=document.getElementById("progressBar");
+const loadingPercent=document.getElementById("loadingPercent");
+
+const deleteProgress=document.getElementById("deleteProgress");
+const deleteText=document.getElementById("deleteText");
+
+const counter=document.getElementById("counter");
+
+// =======================================
+// BOOT
+// =======================================
+
+let progress=0;
+
+const bootAnimation=setInterval(()=>{
 
     progress++;
 
-    progressBar.style.width = progress + "%";
-    loadingPercent.innerHTML = progress + "%";
+    progressBar.style.width=progress+"%";
 
-    if(progress >= 100){
+    loadingPercent.textContent=progress+"%";
+
+    if(progress>=100){
 
         clearInterval(bootAnimation);
 
@@ -106,58 +125,84 @@ const bootAnimation = setInterval(() => {
 
 },40);
 
+// =======================================
+// PARTE 2
+// MENSAJE + TYPEWRITER + COUNTDOWN
+// =======================================
 
-// ===============================
-// MENSAJE
-// ===============================
+function showMessage() {
 
-function showMessage(){
-    accessSound.play().catch(() => {});
+    if (accessSound) {
+        accessSound.currentTime = 0;
+        accessSound.play().catch(()=>{});
+    }
 
     boot.classList.add("hidden");
 
     message.classList.remove("hidden");
-    
-   function typeWriter() {
 
-    const texts = document.querySelectorAll(".typing");
+    message.classList.add("fadeIn");
 
-    texts.forEach((item) => {
+    typeWriter();
 
-        const original = item.innerHTML.trim();
+    setTimeout(startCountdown,7000);
 
-        item.innerHTML = "";
+}
 
-        let i = 0;
 
-        const writer = setInterval(() => {
+// =======================================
+// EFECTO MAQUINA DE ESCRIBIR
+// =======================================
 
-            item.innerHTML += original.charAt(i);
+function typeWriter(){
 
-            if (original.charAt(i) !== " ") {
-                typingSound.currentTime = 0;
-                typingSound.play().catch(() => {});
-            }
+    const texts=document.querySelectorAll(".typing");
 
-            i++;
+    texts.forEach((item)=>{
 
-            if (i >= original.length) {
+        const original=item.dataset.text || item.innerText;
+
+        item.dataset.text=original;
+
+        item.innerHTML="";
+
+        let i=0;
+
+        const writer=setInterval(()=>{
+
+            if(i<original.length){
+
+                item.innerHTML+=original.charAt(i);
+
+                if(
+                    typingSound &&
+                    original.charAt(i)!==" "
+                ){
+
+                    typingSound.currentTime=0;
+
+                    typingSound.play().catch(()=>{});
+
+                }
+
+                i++;
+
+            }else{
+
                 clearInterval(writer);
+
             }
 
-        }, 28);
+        },28);
 
     });
 
 }
 
-}
 
-
-
-// ===============================
+// =======================================
 // CUENTA REGRESIVA
-// ===============================
+// =======================================
 
 function startCountdown(){
 
@@ -165,36 +210,44 @@ function startCountdown(){
 
     countdown.classList.remove("hidden");
 
-    let number = 5;
+    countdown.classList.add("fadeIn");
 
-    counter.innerHTML = number;
+    let number=5;
 
-    const timer = setInterval(()=>{
+    counter.innerHTML=number;
+
+    const timer=setInterval(()=>{
 
         number--;
 
-        counter.innerHTML = number;
+        if(number>0){
 
-        if(number==0){
+            counter.innerHTML=number;
+
+        }else{
 
             clearInterval(timer);
 
-            setTimeout(showDestroy,1000);
+            counter.innerHTML="💣";
+
+            if(navigator.vibrate){
+
+                navigator.vibrate([200,100,200]);
+
+            }
+
+            setTimeout(showDestroy,1200);
 
         }
 
     },1000);
-document.body.classList.add("flash");
 
-setTimeout(() => {
-    document.body.classList.remove("flash");
-}, 500);
-    
 }
 
-// ===============================
-// ELIMINANDO MENSAJE
-// ===============================
+// =======================================
+// PARTE 3
+// DESTRUCCIÓN + FINAL
+// =======================================
 
 function showDestroy(){
 
@@ -202,21 +255,31 @@ function showDestroy(){
 
     destroy.classList.remove("hidden");
 
-    let deletePercent=0;
+    destroy.classList.add("fadeIn");
+
+    let percent=0;
 
     const deleting=setInterval(()=>{
 
-        deletePercent+=4;
+        percent+=4;
 
-        deleteProgress.style.width=deletePercent+"%";
+        deleteProgress.style.width=percent+"%";
 
-        deleteText.innerHTML="Deleting... "+deletePercent+"%";
+        deleteText.innerHTML="Deleting message... "+percent+"%";
 
-        if(deletePercent>=100){
+        if(percent>=100){
 
             clearInterval(deleting);
 
-            setTimeout(showFinal,1200);
+            document.body.classList.add("flash");
+
+            setTimeout(()=>{
+
+                document.body.classList.remove("flash");
+
+                showFinal();
+
+            },500);
 
         }
 
@@ -226,65 +289,80 @@ function showDestroy(){
 
 
 
-// ===============================
-// FINAL
-// ===============================
-
 function showFinal(){
-    explosionSound.play().catch(() => {});
 
-if (navigator.vibrate) {
-    navigator.vibrate([300, 100, 300]);
-}
+    if(explosionSound){
+
+        explosionSound.currentTime=0;
+
+        explosionSound.play().catch(()=>{});
+
+    }
 
     destroy.classList.add("hidden");
 
     finalScreen.classList.remove("hidden");
 
     finalScreen.classList.add("fadeIn");
-function typeWriter(){
 
-const texts=document.querySelectorAll(".typing");
+    finalScreen.innerHTML=`
 
-texts.forEach((item)=>{
+        <h1>💀</h1>
 
-const original=item.innerHTML.trim();
+        <h2>MESSAGE DESTROYED</h2>
 
-item.innerHTML="";
-
-let i=0;
-
-const writer=setInterval(()=>{
-
-item.innerHTML+=original.charAt(i);
-
-i++;
-
-if(i>=original.length){
-
-clearInterval(writer);
-
-}
-
-},28);
-
-});
-
-}
-    setTimeout(() => {
-
-    document.body.style.background = "#000";
-
-    finalScreen.innerHTML = `
-        <h1 style="color:#00ff66;">🎂</h1>
-        <h2>FELIZ CUMPLEAÑOS JIMMY</h2>
         <br>
-        <p>😂 Tus amigos del Área de TI.</p>
+
+        <p>Connection terminated...</p>
+
         <br>
-        <p style="font-size:14px;color:#666;">
-        Fin de la transmisión...
-        </p>
+
+        <p>ERROR 0xC0FFEE</p>
+
     `;
 
-},5000);
+    setTimeout(()=>{
+
+        finalScreen.innerHTML=`
+
+            <h1>🎂</h1>
+
+            <h2>¡FELIZ CUMPLEAÑOS JIMMY!</h2>
+
+            <br>
+
+            <p>
+
+            Que sigas cumpliendo tus objetivos
+
+            y tengas un año muy productivo.
+
+            💪
+
+            </p>
+
+            <br>
+
+            <p>
+
+            😂 No olvidar que se devuelve el equipo.
+
+            <br><br>
+
+            Tus amigos del Área de TI.
+
+            </p>
+
+            <br>
+
+            <p style="color:#888;font-size:16px;">
+
+            Fin de la transmisión...
+
+            </p>
+
+        `;
+
+    },4000);
+
 }
