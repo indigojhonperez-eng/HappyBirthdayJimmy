@@ -1,0 +1,408 @@
+/* ===================================================
+   HACKER BIRTHDAY - STYLE.CSS
+=================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#000;
+    overflow:hidden;
+
+    font-family:'Share Tech Mono', monospace;
+
+    color:#00ff66;
+
+}
+
+
+/* Fondo Matrix */
+
+#matrix{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:-2;
+
+    background:
+    radial-gradient(circle at center,#062d06 0%,#021302 45%,#000 100%);
+
+}
+
+
+/* Destellos */
+
+#matrix::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background-image:
+
+    linear-gradient(rgba(0,255,0,.05) 1px, transparent 1px),
+
+    linear-gradient(90deg, rgba(0,255,0,.03) 1px, transparent 1px);
+
+    background-size:35px 35px;
+
+    animation:gridMove 10s linear infinite;
+
+    opacity:.35;
+
+}
+
+
+@keyframes gridMove{
+
+    from{
+
+        transform:translateY(0px);
+
+    }
+
+    to{
+
+        transform:translateY(35px);
+
+    }
+
+}
+
+
+/* Terminal */
+
+#terminal{
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+
+/* Ocultar secciones */
+
+.hidden{
+
+    display:none;
+
+}
+
+
+/* ASCII */
+
+#ascii{
+
+    color:#00ff66;
+
+    font-size:11px;
+
+    line-height:1.1;
+
+    margin-bottom:25px;
+
+    text-shadow:0 0 15px #00ff66;
+
+}
+
+
+/* Títulos */
+
+h1{
+
+    font-size:90px;
+
+    margin-bottom:15px;
+
+    text-shadow:
+
+    0 0 20px #00ff66,
+
+    0 0 40px #00ff66;
+
+}
+
+
+h2{
+
+    font-size:38px;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+
+    text-shadow:
+
+    0 0 10px #00ff66,
+
+    0 0 25px #00ff66;
+
+}
+
+
+/* Texto */
+
+p{
+
+    font-size:24px;
+
+    line-height:1.8;
+
+}
+
+
+/* Cursor escribiendo */
+
+.typing::after{
+
+    content:"_";
+
+    animation:blink .8s infinite;
+
+}
+
+
+@keyframes blink{
+
+    50%{
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* Barra progreso */
+
+.progress{
+
+    width:75%;
+
+    max-width:700px;
+
+    height:24px;
+
+    margin-top:30px;
+
+    border:2px solid #00ff66;
+
+    box-shadow:0 0 15px #00ff66;
+
+}
+
+
+#progressBar{
+
+    width:0%;
+
+    height:100%;
+
+    background:#00ff66;
+
+    box-shadow:
+
+    0 0 15px #00ff66,
+
+    0 0 30px #00ff66;
+
+}
+
+
+#loadingPercent{
+
+    margin-top:20px;
+
+    font-size:26px;
+
+}
+
+
+/* Cuenta regresiva */
+
+#counter{
+
+    font-size:240px;
+
+    color:#00ff66;
+
+    text-shadow:
+
+    0 0 30px #00ff66,
+
+    0 0 80px #00ff66,
+
+    0 0 120px #00ff66;
+
+}
+
+
+/* Barra eliminar */
+
+.deleteBar{
+
+    width:75%;
+
+    max-width:700px;
+
+    height:24px;
+
+    border:2px solid red;
+
+    box-shadow:0 0 15px red;
+
+}
+
+
+#deleteProgress{
+
+    width:0%;
+
+    height:100%;
+
+    background:red;
+
+}
+
+
+.red{
+
+    color:#ff3333;
+
+    text-shadow:
+
+    0 0 15px red,
+
+    0 0 35px red;
+
+}
+
+
+#deleteText{
+
+    margin-top:30px;
+
+    font-size:30px;
+
+}
+
+
+/* Animaciones */
+
+.fadeIn{
+
+    animation:fadeIn 1s forwards;
+
+}
+
+
+.fadeOut{
+
+    animation:fadeOut 1s forwards;
+
+}
+
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+        transform:scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1);
+
+    }
+
+}
+
+
+@keyframes fadeOut{
+
+    from{
+
+        opacity:1;
+
+    }
+
+    to{
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* Responsive */
+
+@media(max-width:768px){
+
+#ascii{
+
+    font-size:7px;
+
+}
+
+h1{
+
+    font-size:70px;
+
+}
+
+h2{
+
+    font-size:24px;
+
+}
+
+p{
+
+    font-size:18px;
+
+}
+
+#counter{
+
+    font-size:170px;
+
+}
+
+.progress,
+.deleteBar{
+
+    width:95%;
+
+}
+
+}
