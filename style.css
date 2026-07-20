@@ -462,5 +462,25 @@ opacity:.18;
 opacity:.10;
 
 }
+.flash {
 
+    animation: flashRed .5s;
+
+}
+
+@keyframes flashRed {
+
+    0% {
+        background: #000;
+    }
+
+    50% {
+        background: #550000;
+    }
+
+    100% {
+        background: #000;
+    }
+
+}
 }
