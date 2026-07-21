@@ -99,7 +99,9 @@ body{
 
     text-align:center;
 
-    padding:30px;
+    padding:40px;
+    max-width:1200px;
+    margin:auto;
 
 }
 
@@ -156,10 +158,11 @@ h2{
     margin-bottom:20px;
 
     text-shadow:
-
-    0 0 10px #00ff66,
-
-    0 0 25px #00ff66;
+       
+    0 0 8px #00ff66,
+    0 0 20px #00ff66,
+    0 0 40px #00ff66,
+    0 0 80px #00ff66;
 
 }
 
@@ -174,6 +177,27 @@ p{
 
 }
 
+/* Texto que se escribe */
+
+.typing{
+
+    white-space:pre-line;
+
+    display:block;
+
+    margin:25px auto;
+
+    max-width:900px;
+
+    line-height:1.7;
+
+    font-size:30px;
+
+    text-shadow:
+        0 0 10px #00ff66,
+        0 0 20px #00ff66;
+
+}
 
 /* Cursor escribiendo */
 
@@ -205,7 +229,9 @@ p{
 
     max-width:700px;
 
-    height:24px;
+    height:30px;
+    border-radius:8px;
+    overflow:hidden;
 
     margin-top:30px;
 
@@ -223,6 +249,8 @@ p{
     height:100%;
 
     background:#00ff66;
+   
+    transition:width .15s linear;
 
     box-shadow:
 
@@ -246,7 +274,9 @@ p{
 
 #counter{
 
-    font-size:240px;
+    font-size:260px;
+    
+    font-weight:bold;
 
     color:#00ff66;
 
@@ -269,11 +299,11 @@ p{
 
     max-width:700px;
 
-    height:24px;
+    height:30px;
 
-    border:2px solid red;
+    border-radius:8px;
 
-    box-shadow:0 0 15px red;
+    overflow:hidden;
 
 }
 
@@ -367,55 +397,47 @@ p{
 
 @media(max-width:768px){
 
-#ascii{
+    #ascii{
+        font-size:7px;
+    }
 
-    font-size:7px;
+    h1{
+        font-size:70px;
+    }
 
-}
+    h2{
+        font-size:24px;
+    }
 
-h1{
+    p{
+        font-size:18px;
+    }
 
-    font-size:70px;
+    #counter{
+        font-size:170px;
+    }
 
-}
-
-h2{
-
-    font-size:24px;
-
-}
-
-p{
-
-    font-size:18px;
-
-}
-
-#counter{
-
-    font-size:170px;
+    .progress,
+    .deleteBar{
+        width:95%;
+    }
 
 }
 
-.progress,
-.deleteBar{
+/* Canvas */
 
-    width:95%;
-
-}
-   canvas{
-
+canvas{
     display:block;
-
 }
-
 
 /* Efecto monitor antiguo */
 
 body::after{
 
     content:"";
-
+    
+    mix-blend-mode:screen;
+    
     position:fixed;
 
     left:0;
@@ -427,60 +449,96 @@ body::after{
     pointer-events:none;
 
     background:
-
     repeating-linear-gradient(
-
-    transparent,
-
-    transparent 3px,
-
-    rgba(255,255,255,.03) 4px
-
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,.03) 4px
     );
 
     animation:flicker .12s infinite;
 
 }
 
-
 @keyframes flicker{
 
-0%{
+    0%{
+        opacity:.10;
+    }
 
-opacity:.10;
+    50%{
+        opacity:.18;
+    }
+
+    100%{
+        opacity:.10;
+    }
 
 }
 
-50%{
+.flash{
 
-opacity:.18;
+    animation:flashRed .5s;
+
+}
+
+@keyframes flashRed{
+
+    0%{
+        background:#000;
+    }
+
+    50%{
+        background:#550000;
+    }
+
+    100%{
+        background:#000;
+    }
+
+}
+
+.glitch{
+
+    animation:glitch .18s infinite;
+
+}
+
+@keyframes glitch{
+
+0%{
+
+transform:translate(0);
+
+}
+
+20%{
+
+transform:translate(-2px,2px);
+
+}
+
+40%{
+
+transform:translate(2px,-2px);
+
+}
+
+60%{
+
+transform:translate(-2px,-2px);
+
+}
+
+80%{
+
+transform:translate(2px,2px);
 
 }
 
 100%{
 
-opacity:.10;
-
-}
-.flash {
-
-    animation: flashRed .5s;
+transform:translate(0);
 
 }
 
-@keyframes flashRed {
-
-    0% {
-        background: #000;
-    }
-
-    50% {
-        background: #550000;
-    }
-
-    100% {
-        background: #000;
-    }
-
-}
 }
