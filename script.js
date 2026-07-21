@@ -259,17 +259,30 @@ function showDestroy(){
 
     destroy.classList.add("fadeIn");
 
-    let percent=0;
+    let percent = 0;
 
-    const deleting=setInterval(()=>{
+    const deleting = setInterval(()=>{
 
-        percent+=4;
+        percent += 4;
 
-        deleteProgress.style.width=percent+"%";
+        deleteProgress.style.width = percent + "%";
 
-        deleteText.innerHTML="Deleting message... "+percent+"%";
+        const messages = [
+            "Deleting secure message...",
+            "Removing traces...",
+            "Erasing logs...",
+            "Destroying evidence..."
+        ];
 
-        if(percent>=100){
+        const index = Math.min(
+            Math.floor(percent / 25),
+            messages.length - 1
+        );
+
+        deleteText.innerHTML =
+            messages[index] + " " + percent + "%";
+
+        if(percent >= 100){
 
             clearInterval(deleting);
 
@@ -289,8 +302,6 @@ function showDestroy(){
 
 }
 
-
-
 function showFinal(){
 
     if(explosionSound){
@@ -306,6 +317,8 @@ function showFinal(){
     finalScreen.classList.remove("hidden");
 
     finalScreen.classList.add("fadeIn");
+
+    finalScreen.classList.add("glitch");
 
     finalScreen.innerHTML=`
 
@@ -325,6 +338,7 @@ function showFinal(){
 
     setTimeout(()=>{
 
+        finalScreen.classList.remove("glitch");
         finalScreen.innerHTML=`
 
             <h1>🎂</h1>
